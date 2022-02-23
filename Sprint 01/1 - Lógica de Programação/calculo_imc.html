@@ -1,0 +1,47 @@
+<meta charset="UTF-8">
+
+
+
+<script>
+
+function pulaLinha() {
+    
+    document.write("<br><br>");
+
+}
+
+function mostra(frase) {
+    document.write(frase);
+    pulaLinha();
+}
+
+function calculaImc(peso, altura){
+    var imc = peso / (altura * altura)
+    return imc
+}
+
+var nomeInformado = prompt("Informe seu nome");
+var pesoInformado = prompt("Informe seu peso: ");
+var alturaInformada = prompt("Informe sua altura: ");
+
+mostra("O imc de " + nomeInformado + " é: " + calculaImc(pesoInformado, alturaInformada));
+
+
+// A função prompt retorna tudo como STRING, em calculos só funcionam operações de multiplicação e divisão.
+// Para somas, a conversão ocorre por: parseInt(texto)
+// parseInt(prompt(Insira o numero))
+
+var imc = calculaImc(pesoInformado, alturaInformada);
+
+if(imc < 18.5){
+        mostra("Magrin e seco")
+    }
+    else if(imc > 35){
+        mostra("Gordola")
+    }
+    else{
+        mostra("Ta na media paizao")
+    }
+
+</script>
+

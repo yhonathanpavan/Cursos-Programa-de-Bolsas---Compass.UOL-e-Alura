@@ -1,0 +1,61 @@
+<canvas width="600" height="400"></canvas>
+
+
+<script>
+
+    var tela = document.querySelector("canvas")
+    var pincel = tela.getContext("2d")
+
+    var raio = 10
+
+    var centroX = 0
+    var centroY = 0
+
+    function desenhaCirculo(x, y, raio, cor){
+        pincel.fillStyle = cor;
+        pincel.beginPath()
+        pincel.arc(x, y, raio, 0, 2 * Math.PI)
+        pincel.fill() 
+    }
+
+    function desenhaAlvo(x, y){
+        desenhaCirculo(x, y, raio+20, "red")
+        desenhaCirculo(x, y, raio+10, "white")
+        desenhaCirculo(x, y, raio, "red")
+    }
+
+    function limpaTela(){
+        pincel.clearRect(0, 0, 600, 400)
+    }
+
+    function sorteiaPosicao(){ //anima o alvo
+        
+        limpaTela()
+
+        var xAleatorio = Math.floor(Math.random() * 600) //arredondar pra baixo pra não estourar o canvas
+        var yAleatorio = Math.floor(Math.random() * 400)
+
+        centroX = xAleatorio;
+        centroY = yAleatorio;
+        
+        desenhaAlvo(xAleatorio, yAleatorio)
+    }
+
+    function cliqueNoAlvo(evento){
+        var x = evento.pageX - tela.offsetLeft
+        var y = evento.pageY - tela.offsetTop
+
+        console.log(centroX + ' ' + x);
+        if(x < centroX + raio 
+        && x > centroX - raio
+        && y < centroY + raio
+        && y > centroY - raio){
+            alert("Muy Bien!")
+        }
+    }
+
+    setInterval(sorteiaPosicao, 1000)
+
+    tela.onclick = cliqueNoAlvo
+
+</script>

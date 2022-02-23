@@ -1,0 +1,33 @@
+<canvas width="600"  height="400"></canvas>
+
+<script>
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+
+    pincel.fillStyle = 'grey';
+    pincel.fillRect(0, 0, 600, 400);
+
+    function desenhaCirculo(evento) {
+
+        // Remover espaço em branco do canvas: - tela.offsetLeft/Top
+
+        var x = evento.pageX - tela.offsetLeft //Coordenada de x -> evento.Pagex 
+        var y = evento.pageY - tela.offsetTop 
+
+        pincel.fillStyle = "blue"
+        pincel.beginPath();
+        pincel.arc(x, y, 10, 0, 2*3.14)
+        pincel.fill();
+
+
+        console.log(x + ',' + y);
+        console.log(evento);
+
+    }
+
+
+    tela.onclick = desenhaCirculo;
+
+// https://cursos.alura.com.br/course/logica-programacao-pratica-com-desenho-animacoes-em-jogo/task/21885
+
+</script>

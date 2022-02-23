@@ -1,0 +1,39 @@
+<canvas width="700" height="700"></canvas>
+
+
+<script>
+
+
+    function desenhaBarra(x, y, serie, cores, texto){
+
+        var tela = document.querySelector("canvas")
+        var pincel = tela.getContext("2d")
+
+        pincel.font = '15px Georgia'
+        pincel.fillStyle = "black"
+        pincel.fillText(texto, x, y - 10)
+        
+        var somaSeries = 0;
+        
+        for(let i = 0; i < serie.length; i++){
+
+            pincel.fillStyle = cores[i]
+            pincel.fillRect(x, y+somaSeries, 80, serie[i]);
+            pincel.strokeStyle = "black"
+            pincel.strokeRect(x, y+somaSeries, 80, serie[i]);
+             
+            somaSeries = somaSeries + serie[i];
+
+            console.log("Serie: " + serie[i])
+             console.log("Soma da serie: " + somaSeries)
+        }
+
+    }
+
+    var serie2015 = [50, 25, 20, 5];
+    var serie2016 = [65, 20, 13, 2];
+    var cores = ['blue', 'green', 'yellow', 'red'];
+
+    desenhaBarra(200, 200, serie2015, cores, "2015")
+    desenhaBarra(300, 200, serie2016, cores, "2016")
+</script>

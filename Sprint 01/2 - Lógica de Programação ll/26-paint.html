@@ -1,0 +1,89 @@
+<canvas width="600" height="400"></canvas>
+
+Selecione a cor <input type="color">
+
+<button class="limpa">Limpa tela</button>
+<button class="aumenta">Aumenta tinta</button>
+<button class="diminui">Diminui tinta</button>
+Aperte "Shift" para usar a borracha
+
+<script>
+    var paleta = document.querySelector('input');
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+
+    pincel.fillStyle = 'grey';
+    pincel.fillRect(0, 0, 600, 400);
+
+    var desenha = false;
+    var raio = 10;
+
+    function desenhaCirculo(evento) {
+
+        if(desenha) {
+            var x = evento.pageX - tela.offsetLeft;
+            var y = evento.pageY - tela.offsetTop;
+            pincel.fillStyle = paleta.value; // sempre pega o valor atual da paleta!
+            pincel.beginPath();
+            pincel.arc(x, y, raio, 0, 2 * 3.14);
+            pincel.fill();
+        }
+        console.log(x + ',' + y);
+    }
+
+    tela.onmousemove = desenhaCirculo;
+
+    // atribuindo diretamente a função anônima
+    tela.onmousedown = function() {
+
+        desenha = true;
+    }
+
+    // atribuindo diretamente a função anônima
+     tela.onmouseup = function() {
+
+        desenha = false;
+    }
+
+    function limparTudo(){
+        pincel.clearRect(0, 0, 600, 400);
+        pincel.fillStyle = "grey"
+        pincel.fillRect(0, 0, 600, 400)
+    }
+
+    function aumentaTinta(){
+        raio += 5;
+    }
+
+    function diminuiTinta(){
+        raio -= 5;
+    }
+
+    function retanguloBorracha(evento){
+
+        var xMouse = evento.pageX - tela.offsetLeft
+        var yMouse = evento.pageY - tela.offsetTop
+
+        if(evento.shiftKey){
+            pincel.fillStyle = "grey"
+            pincel.fillRect(xMouse, yMouse, 50, 50)
+            pincel.strokeStyle = "black"
+            pincel.strokeRect(xMouse, yMouse, 50, 50)
+        }
+    }
+
+    var botaoLimpa = document.querySelector(".limpa")
+    botaoLimpa.onclick = limparTudo;
+    
+    var botaoAumenta = document.querySelector(".aumenta")
+    botaoAumenta.onclick = aumentaTinta;
+
+    var botaoDiminui = document.querySelector(".diminui")
+    botaoDiminui.onclick = diminuiTinta;
+
+    tela.onclick = retanguloBorracha
+
+
+    
+
+</script>

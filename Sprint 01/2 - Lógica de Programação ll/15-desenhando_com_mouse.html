@@ -1,0 +1,45 @@
+<canvas width="600" height="400"></canvas>
+
+<script>
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+
+    pincel.fillStyle = 'grey';
+    pincel.fillRect(0, 0, 600, 400);
+
+    var desenha = false;
+
+    function desenhaCirculo(evento) {
+
+       if(desenha){
+        var x = evento.pageX - tela.offsetLeft;
+        var y = evento.pageY - tela.offsetTop;
+        pincel.fillStyle = 'blue';
+        pincel.beginPath();
+        pincel.arc(x, y, 10, 0, 2 * 3.14);
+        pincel.fill();
+        console.log(x + ',' + y);
+        
+       }
+    }
+/*
+O evento do JavaScript que permite capturar o movimento do mouse,
+e logo sua coordenada, é o "onmousemove"
+*/
+    tela.onmousemove = desenhaCirculo
+
+    function habilitaDesenho(){
+        desenha = true;
+    }
+
+    function desabilitaDesenho(){
+        desenha = false;
+    }
+
+    tela.onmousedown = habilitaDesenho //é disparado toda vez que o botão esquerdo do mouse é pressionado
+
+    tela.onmouseup = desabilitaDesenho //é disparado toda vez que o botão esquerdo do mouse é solto
+
+
+
+</script>

@@ -1,0 +1,42 @@
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    pincel.fillStyle = 'lightgray';
+    pincel.fillRect(0, 0, 600, 400);
+
+    function desenhaCirculo(x, y, raio, cor) {
+
+        pincel.fillStyle = cor;
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * Math.PI);
+        pincel.fill();
+    }
+
+    function limpaTela() {
+
+        pincel.clearRect(0, 0, 600, 400);
+    }
+
+    var pulso = 1; //Que define se vai crescer ou diminuir
+    var i = 20; //Simbolizando o "Raio"
+
+    function pulsando(){
+        limpaTela();
+        
+        if(i >= 30){
+            pulso = -1
+        }
+        if(i <= 20){
+            pulso = +1
+        }
+
+        desenhaCirculo(300, 200, i, "blue")
+        i += pulso;
+    }
+
+    setInterval(pulsando, 20)
+
+</script>

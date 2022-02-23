@@ -1,0 +1,25 @@
+<meta charset="UTF-8">
+
+<script>
+    
+function pulaLinha(){
+    document.write("<br>");
+}
+
+function mostra(mensagem){
+    document.write("<center><big>" + mensagem + "</big></center>");
+    pulaLinha();
+}
+
+var tabuada = parseInt(prompt("Insira a tabuada que deseja conferir: "));
+
+document.write("<center><h1>Tabuada do " + tabuada + "</h1></center>")
+document.write("<hr>")
+
+    for(let i = 0; i <= 10; i++){
+
+        var resultado = tabuada * i;
+        mostra(tabuada + " x " + i + " = " + resultado);
+    }
+
+</script>

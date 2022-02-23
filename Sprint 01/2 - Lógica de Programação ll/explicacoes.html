@@ -1,0 +1,125 @@
+<canvas width="1000" height="600">
+</canvas>
+
+Escolha a cor: <input type="color">
+
+<script>
+
+    var tela = document.querySelector("canvas")
+    var pincel = tela.getContext("2d")
+
+    //****************** Retangulos 
+
+    pincel.fillStyle = "lightgrey" //Escolho a cor
+    pincel.fillRect(0, 0, 1000, 1000) // preencho um retangulo (x, y, largura, altura)
+
+    pincel.fillStyle = "blue"
+    pincel.fillRect(10, 10, 200, 200)
+
+    
+    //******************* Circulos
+
+    pincel.fillStyle = "red"
+    pincel.beginPath() //Inicio um novo caminho
+    pincel.arc(300, 100, 90, 0, 2 * Math.PI) //Declaro o circulo: (x, y, raio, angulo inicial, angulo final)
+    pincel.fill() //Preencho o circulo
+
+    
+    //******************* Esquadros (tiangulos)
+    
+    pincel.fillStyle = "darkgreen"
+    pincel.beginPath();
+    pincel.moveTo(390, 10) //Mover o ponto para: x, y (começa a partir daí)
+    pincel.lineTo(390, 200) //Traçar uma linha para...
+    pincel.lineTo(600, 200)
+    pincel.fill() //Preencher o que há entre os pontos
+
+
+    //******************** Descobrir Coordenadas do mouse:
+
+    function descobrirCoord(evento){ //"evento" é um parâmetro passado somente pelo navegador. 
+
+        var x = evento.pageX - tela.offsetLeft //coordenada de x - sobra de tela a esquerda do canvas
+        var y = evento.pageY - tela.offsetTop //coordenada de y - sobra superior do canvas
+
+        console.log(x + ',' + y);
+
+    }
+
+    tela.onmousemove = descobrirCoord //onmousemove (evento quando o mouse se move)
+
+    //******************* Limpando tela
+    function limpaTela(){
+        pincel.clearRect(0, 400, 1000, 600)
+        //pincel.clearRect(0, 0, 600, 400)
+        pincel.fill()
+    }
+
+
+
+    //******************* Criar desenhos
+    
+    var desenha = false;
+    var corDaTinta = document.querySelector("input")
+
+    function desenhaCirculo(evento) {
+
+    if(desenha){
+        var x = evento.pageX - tela.offsetLeft;
+        var y = evento.pageY - tela.offsetTop;
+        pincel.fillStyle = corDaTinta.value; //Pego o valor da cor, utilizando o DOM
+        pincel.beginPath();
+        pincel.arc(x, y, 10, 0, 2 * 3.14);
+        pincel.fill();
+        
+    }
+    }
+    /*
+    O evento do JavaScript que permite capturar o movimento do mouse,
+    e logo sua coordenada, é o "onmousemove"
+    */
+    tela.onmousemove = desenhaCirculo
+
+    function habilitaDesenho(){
+        desenha = true;
+    }
+
+    function desabilitaDesenho(){
+        desenha = false;
+    }
+
+    tela.onmousedown = habilitaDesenho //é disparado toda vez que o botão esquerdo do mouse é pressionado
+
+    tela.onmouseup = desabilitaDesenho //é disparado toda vez que o botão esquerdo do mouse é solto
+
+
+    //****************** Criando Animações
+
+        function bolinha(x, y, raio, cor){
+            pincel.fillStyle = cor
+            pincel.beginPath()
+            pincel.arc(x, y, raio, 0, 2 * Math.PI)
+            pincel.fill()          
+        }
+
+        var direcao = 1;
+        var x = 0;
+
+        function animacao(){
+            limpaTela();
+
+            if(x >= 500){
+                direcao = -1
+            }
+            if(x <= 0){
+                direcao = 1
+            }
+
+            bolinha(x, 500, 50, "blue")
+            x += direcao;
+        }
+
+        setInterval(animacao, 10)
+
+</script>
+
