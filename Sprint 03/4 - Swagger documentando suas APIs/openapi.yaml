@@ -1,0 +1,102 @@
+openapi: 3.0.1
+
+info: 
+  title: API de Consultório
+  description: Api para controlar médicos e suas especialidades dentro do consultório.
+  version: 0.0.1
+  termsOfService: https://mockapi.io
+  #Contatos
+  contact:
+    name: Suporte a Devs
+    email: contato@example.com
+    url: https://mockapi.io
+  #Licença
+  license:
+    name: "Licença: GPLv3"
+    url: https://www.gnu.org/licenses/gpl-3.0.en.html
+    
+# Como inserir links externos
+externalDocs: 
+  description: Documentação burocrática
+  url: https://mockapi.io
+  
+#Antes de ter paths, preciso ter um servidor
+
+servers: #Funcionam com arrays, onde eu informo a url e a descricao. onde cada item do array é um endpoint.
+ - url: https://622e24f68d943bae348f7973.mockapi.io/
+   description: API de teste
+paths:
+  /especialidades:
+    get: 
+      summary: Recupera todas as especialidades #sumary descreve o que esse verbo get faz
+      responses: #Defino as possiveis respostas
+        200:
+          description: Sucesso
+          content: #A chave do conteúdo é o formato
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Especialidades"
+    post:
+      summary: Cria novas especialidades
+      description: "Através desse endpoint você pode criar novas especialidades"
+      requestBody: #Informo como será enviado / Mandar dados no corpo da requisição
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                descricao:
+                  type: string
+      responses:
+        201:
+          description: "Sucesso"
+          content:
+           application/json:
+            schema:
+              $ref: "#/components/schemas/Especialidade"
+            
+  /especialidades/{id}:
+    parameters: #Sobre os parâmetros
+    - name: id
+      in: path #especifio que o id está no path(url)
+      schema:
+        type: integer
+      required: true #Preciso informar o parametro(obrigatorio)
+    get:
+      summary: Recupera uma entidade pelo ID
+      #Preciso mapear o parametro {id}
+      responses:
+        200:
+          description: Sucesso
+          content: 
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Especialidade"
+        404:
+          description: Especialidade não encontrada
+          content:
+            application/json:
+              example: "Not Found"
+
+security:
+  - auth: []
+components: #É algo que nós podemos reutilizar em vários lugares
+  schemas:
+    Especialidade:
+     type: object 
+     properties:
+      id: 
+        type: integer
+      desricao:   
+        type: string
+    Especialidades: #é um array de Especialidade
+      type: array
+      items:
+        $ref: "#/components/schemas/Especialidade"
+  securitySchemes:
+    auth: #"auth" é o nome aleatório que eu determinei
+      type: http
+      scheme: bearer #portador
+      bearerFormat: JWT
+      
+    
